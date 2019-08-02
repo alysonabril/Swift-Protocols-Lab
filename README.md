@@ -22,9 +22,55 @@ a. Create a `Human` class with two properties:
 - `age` of type Int.
 
 Then create an initializer for the class and create two `Human` instances.
+```swift
+//Create a `Human` class with two properties (`name` `age`)
+class Human {
+var name: String
+var age: Int
+// create an initializer for the class
+init(name: String, age: Int) {
+self.name = name
+self.age = age
+}
+}
+
+
+//create two `Human` instances
+let myFavoriteHuman = Human(name: "James Star", age: 35)
+let myNextFavoriteHuman = Human(name: "Fufu-chan", age: 35)
+
+
+```
 
 b. Make the `Human` class adopt the CustomStringConvertible protocol. Then print both of your previously initialized
 `Human` objects.
+```swift
+
+class Human: CustomStringConvertible {
+var description: String {
+get {
+return "my name is \(self.name) and I am \(self.age) years old."
+}
+}
+
+var name: String
+var age: Int
+// create an initializer for the class
+init(name: String, age: Int) {
+self.name = name
+self.age = age
+}
+}
+
+
+//create two `Human` instances
+let myFavoriteHuman = Human(name: "James Star", age: 35)
+let myNextFavoriteHuman = Human(name: "Fufu-chan", age: 35)
+
+print(myFavoriteHuman.description)
+print(myNextFavoriteHuman.description)
+```
+
 
 c. Make the `Human` class adopt the Equatable protocol. Two instances of `Human` should be considered equal
 if their names and ages are identical to one another. Print the result of a boolean expression
@@ -32,11 +78,131 @@ evaluating whether or not your two previously initialized `Human` objects are eq
 (using ==). Then print the result of a boolean expression evaluating whether or not your two
 previously initialized `Human` objects are not equal to eachother (using !=).
 
-d. Make the `Human` class adopt the `Comparable` protocol. One `Human` is greater than another `Human` if its age is bigger. Create another
+```swift
+class Human: Equatable {
+
+static func == (lhs: Human, rhs: Human) -> Bool {
+var myBool = Bool()
+
+if lhs.name == rhs.name &&  lhs.age == rhs.age {
+myBool = true
+}
+
+if lhs.name != rhs.name || lhs.age != rhs.age {
+myBool = false
+}
+return myBool
+}
+
+
+
+var name: String
+var age: Int
+// create an initializer for the class
+init(name: String, age: Int) {
+self.name = name
+self.age = age
+}
+}
+
+
+//create two `Human` instances
+let myFavoriteHuman = Human(name: "James Star", age: 35)
+let myNextFavoriteHuman = Human(name: "Fufu-chan", age: 35)
+
+print(myNextFavoriteHuman == myNextFavoriteHuman)
+
+
+```
+
+d. Make the `Human` class adopt the `Comparable` protocol. One `Human` is greater than another `Human` if its age is bigger. 
+```swift
+class Human: Comparable {
+static func < (lhs: Human, rhs: Human) -> Bool {
+var humanIsGreater = Bool()
+
+if lhs.age > rhs.age {
+humanIsGreater = true
+print("haha")
+} else {
+humanIsGreater = false
+print("damn")
+}
+return humanIsGreater
+}
+
+
+static func == (lhs: Human, rhs: Human) -> Bool {
+var myBool = Bool()
+
+if lhs.name == rhs.name &&  lhs.age == rhs.age {
+myBool = true
+}
+
+if lhs.name != rhs.name || lhs.age != rhs.age {
+myBool = false
+}
+return myBool
+}
+
+
+
+var name: String
+var age: Int
+// create an initializer for the class
+init(name: String, age: Int) {
+self.name = name
+self.age = age
+}
+}
+
+
+//create two `Human` instances
+let myFavoriteHuman = Human(name: "James Star", age: 35)
+let myNextFavoriteHuman = Human(name: "Fufu-chan", age: 35)
+
+//print(myNextFavoriteHuman == myNextFavoriteHuman)
+
+print(myNextFavoriteHuman < myFavoriteHuman)
+
+```
+
+Create another
 three instances of a `Human`, then create an array called people of type [`Human`] with all of the
 `Human` objects that you have initialized.
 
 Create a new array called sortedPeople of type [`Human`] that is the people array sorted by age.
+
+```swift
+class Human {
+
+
+var name: String
+var age: Int
+// create an initializer for the class
+init(name: String, age: Int) {
+self.name = name
+self.age = age
+}
+}
+
+
+//create two `Human` instances
+let myFavoriteHuman = Human(name: "James Star", age: 34)
+let myNextFavoriteHuman = Human(name: "Fufu-chan", age: 33)
+//Create another
+//three instances of a `Human`, then create an array called people of type [`Human`] with all of the `Human` objects that you have initialized.
+let myPuppyAsHuman = Human(name: "Gypsy", age: 10)
+let mySistersCatAsHuman = Human(name: "Blu Everest", age: 1)
+let myLastFavoriteHuman = Human(name: "David Marvel", age: 32)
+//print(myNextFavoriteHuman == myNextFavoriteHuman)
+//print(myNextFavoriteHuman < myFavoriteHuman)
+
+let myHumanArray: [Human] = [myFavoriteHuman, myNextFavoriteHuman, myLastFavoriteHuman, myPuppyAsHuman, mySistersCatAsHuman]
+
+let sortedHumans = myHumanArray.sorted(by: {$0.age < $1.age})
+print(sortedHumans)
+```
 
 </br> </br>
 
@@ -46,14 +212,47 @@ Create a new array called sortedPeople of type [`Human`] that is the people arra
 a. Create a protocol called `Vehicle` with two requirements:
 - a nonsettable `numberOfWheels` property of type Int,
 - a function called drive().
+```swift
+protocol Vehicle {
+var numberOfWheels: Int {get}
 
+func drive ()
+}
+```
 b. Define a `Car` struct that implements the `Vehicle` protocol. `numberOfWheels` should return a value of 4,
 and drive() should print "Vroom, vroom!" Create an instance of `Car`, print its number of wheels,
 then call drive().
+```swift
 
+struct Car: Vehicle {
+let numberOfWheels = 4
+
+func drive() {
+print("Vroom, vroom!")
+}
+}
+
+let mercedes = Car(numberOfWheels: 4)
+print("I have \(mercedes.numberOfWheels) wheels")
+mercedes.drive()
+```
 c. Define a Bike struct that implements the `Vehicle` protocol. `numberOfWheels` should return a value of 2,
 and drive() should print "Begin pedaling!". Create an instance of Bike, print its number of wheels,
 then call drive().
+
+```swift
+struct Bike: Vehicle {
+let numberOfWheels = 2
+
+func drive() {
+print("Begin pedaling!")
+}
+}
+
+let bicycle = Bike()
+print("I have \(bicycle.numberOfWheels) wheels")
+bicycle.drive()
+```
 
 </br> </br>
 
@@ -72,6 +271,24 @@ protocol Bird {
 protocol Flyable {
  var airspeedVelocity: Double { get }
 }
+
+
+struct Penguin: Bird, Flyable {
+let name = "Penguin"
+let isCute = true
+let canFly = false
+
+
+let airspeedVelocity = 0.0
+}
+
+struct Eagle: Bird, Flyable {
+var name = "Bald Eagle"
+var isBadAss = true
+var canFly = true
+
+var airspeedVelocity = 75.0
+}
 ```
 
 </br> </br>
@@ -86,8 +303,24 @@ c. Create an instance of it named `bruceBanner`. Make it so that when the transf
 `.notHulk` to `.hulk.``
 
 ```swift
+
+protocol Transformation {
+
+mutating func transform()
+}
+
 enum SuperHero: Transformation {
-    // write code here.
+case hulk
+case notHulk
+
+mutating func transform() {
+switch self {
+case .hulk:
+self = .notHulk
+case .notHulk:
+self = .hulk
+}
+}
 }
 
 // Example Output:
@@ -103,20 +336,53 @@ bruceBanner.transform()  // notHulk
 
 ## Question 5
 
-a. Create a protocol called `Communication`
+```swift
+//a. Create a protocol called `Communication`
+protocol Communication {
+//b. Give it a property called `message`, of type String, and assign it an explicit getter.
+var message: String {get}
+}
 
-b. Give it a property called `message`, of type String, and assign it an explicit getter.
+//c. Create three Classes. `Cow`, `Dog`, `Cat`.
+//d. Have your three classes conform to `Communication`
+class Cow: Communication {
+var message: String {
+get {
+return "moooooo. Grass is yummy"
+}
+}
+}
 
-c. Create three Classes. `Cow`, `Dog`, `Cat`.
+class Dog: Communication {
+var message: String {
+get {
+return "LOVE ME. Belly rubs are my favorite"
+}
+}
+}
 
-d. Have your three classes conform to `Communication`
+class Cat: Communication {
+var message: String {
+get {
+return "I am wonderful, bow to me or I'll scratch you!"
+}
+}
+}
 
-e. `message` should return a unique message for each animal when talk is called.
 
-f. Put an instance of each of your classes in an array.
+//f. Put an instance of each of your classes in an array.
 
-g. Iterate over the array and have them print their `message` property
+let blu = Cat()
+let gypsy = Dog()
+let mooMoo = Cow()
 
+let animalArray: [Communication] = [blu, gypsy, mooMoo]
+
+// g. Iterate over the array and have them print their `message` property
+for animal in animalArray {
+print(animal.message)
+}
+```
 
 ## Question 6
 
